@@ -23,11 +23,12 @@ class GoalTracker(Tk):
         add_goal_button.pack(side="left")
         self.goals_listbox.pack(side="left")
         goal_progress.pack(side="left")
-        goals_panel.pack(side="top")
+        goals_panel.pack(side="top", pady=10)
 
         # Tasks panel
         tasks_panel = Frame(self)
         tasks_label = Label(tasks_panel, text="Task: ")
+        self.tasks_entry = Entry(tasks_panel, width=20)  # Added missing Entry widget
         add_task_button = Button(
             tasks_panel, text="Add Task", command=self.add_task)
         self.tasks_listbox = Listbox(tasks_panel)
@@ -35,10 +36,11 @@ class GoalTracker(Tk):
 
         # Pack Tasks panel components
         tasks_label.pack(side="left")
+        self.tasks_entry.pack(side="left")  # Added missing pack() call for Entry widget
         add_task_button.pack(side="left")
         self.tasks_listbox.pack(side="left")
         task_progress.pack(side="left")
-        tasks_panel.pack(side="bottom")
+        tasks_panel.pack(side="bottom", pady=10)
 
     def add_goal(self):
         goal = self.goals_entry.get()
@@ -46,8 +48,11 @@ class GoalTracker(Tk):
 
     def add_task(self):
         goal = self.goals_listbox.get(self.goals_listbox.curselection())
-        self.tasks_listbox.insert("end", f"{goal} task")
+        task = self.tasks_entry.get()  # Get the task text from the Entry widget
+        self.tasks_listbox.insert("end", f"{goal}: {task}")  # Modified to display goal and task
 
 
 if __name__ == "__main__":
     app = GoalTracker()
+    app.mainloop()  # Added mainloop() to run the Tkinter event loop
+
